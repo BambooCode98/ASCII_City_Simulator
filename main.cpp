@@ -13,8 +13,16 @@ using namespace std;
 
 int main() {
 
+  initscr();
+
+  cbreak();
+  noecho();
+  clear();
+  curs_set(0);
 
 
+
+  endwin();
 
   return 0;
 

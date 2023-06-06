@@ -1,0 +1,33 @@
+- have a screen class that will create the window, show the display, and add effects
+
+- have a game management class that will govern game rules, set game flow, implement game components, and add the screen to the game
+
+- there will be no "player" in the game so do not need to consider adding typical player based components, only need to focus on making the cursor move around and able to do stuff
+
+- the cursor will need to be able to place buildings, switch windows, and delete things
+
+- each building will need its own class, and due to the nature of this being an ASCII game will limit to basic Residential, Commercial, and Industrial (RCI) types. Other building types will be fire station, police station, power plant, etc.
+
+- will need a class that implements the simulations/math aspect of the city --> this could include time, money, population, city stats, etc.
+
+
+
+    Classes
+----------------
+
+1. Buildings
+
+  Classes below will inherit a few methods/variables from the buildings class
+
+  1a. Residential
+  2a. Commercial
+  3a. Industrial
+  [4a.....]
+
+2. Screen
+
+3. GameSystem
+
+  3a. this class will implement all the others and tie them together
+
+4. Simulation
