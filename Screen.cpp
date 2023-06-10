@@ -9,17 +9,16 @@
 
 Screen::Screen() {};
 
-void Screen::createScreen() {
-  initscr();
+void Screen::createScreen(WINDOW *mainwin) {
   cbreak();
   noecho();
   clear();
-  curs_set(0);
+  keypad(mainwin,true);
+  // curs_set();
 }
 
 
 void Screen::deleteScreen() {
-  endwin();
 }
 
 

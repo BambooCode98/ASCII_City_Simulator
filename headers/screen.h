@@ -7,7 +7,7 @@ class Screen {
   public:
 
       Screen();
-      static void createScreen();
+      static void createScreen(WINDOW *mainwin);
       static void deleteScreen();
 
 
