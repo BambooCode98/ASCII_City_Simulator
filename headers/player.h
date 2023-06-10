@@ -7,13 +7,16 @@
 
 class Player{
   public:
-    Player();
+    Player(WINDOW* win);
     void moveCursor();
 
 
 
   private:
-    int _x,_y;
+    int _x = 1;
+    int _y = 1;
+    int _key;
+    WINDOW* _win;
 
 
 };
