@@ -8,7 +8,7 @@
 class Player{
   public:
     Player(WINDOW* win);
-    void moveCursor();
+    int moveCursor();
 
 
 
