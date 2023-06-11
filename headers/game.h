@@ -2,14 +2,16 @@
 #include <iostream>
 // #include "player.h"
 
-// class Player;
+class Player;
+class Simulation;
 
 class Game{
   public:
     Game();
     void GameLoop();
     void setQuit(int quit);
-    // void runCity(Player player);
+    void runCity(Player &player);
+    void updateSim(Simulation &simulate);
 
 
 

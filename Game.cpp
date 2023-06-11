@@ -24,11 +24,28 @@ void Game::setQuit(int quit) {
 //   using std::chrono::operator""ms;
 //   return now() + 1000ms;
 // }
-// void Game::runCity() {
+void Game::runCity(Player &player) {
+  while(_quit != 'p') {
+    _quit = player.moveCursor();
+
+    refresh();
+  }
   
 
-//   refresh();
-// }
+}
+
+void Game::updateSim(Simulation &simulate) {
+  int m = 5;
+
+  while(_quit != 'p') {
+    simulate.update(m);
+    m+=1;
+
+    refresh();
+  }
+  
+
+}
 
 void Game::GameLoop() {
 
@@ -51,22 +68,18 @@ void Game::GameLoop() {
   Player player(city);
   Simulation simulate(stats);
 
-  int m = 5;
 
-  while(_quit != 'p') {
-    _quit = player.moveCursor();
+  // while(_quit != 'p') {
 
-    // std::thread t1(&Game::runCity,this,player);
-    m+=1;
-    simulate.update(m);
 
-  }
-
+  // }
+    // m+=1;
+    // simulate.update(m);
+  std::thread t1(&Game::runCity,this,std::ref(player));
+  std::thread t2(&Game::updateSim,this,std::ref(simulate));
+  t1.join();
+  t2.join();
   
-
-
-  
-
 
   delwin(city);
   delwin(stats);

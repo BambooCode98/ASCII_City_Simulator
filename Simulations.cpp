@@ -32,7 +32,7 @@ void Simulation::updatePop(int pop) {
 
 void Simulation::updateMon(int mon) {
   _mon = mon;
-  // std::this_thread::sleep_until(awake());
+  std::this_thread::sleep_until(awake());
 
 }
 
