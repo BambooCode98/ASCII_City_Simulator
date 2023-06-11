@@ -13,7 +13,7 @@ void Screen::createScreen(WINDOW *mainwin) {
   cbreak();
   noecho();
   clear();
-  nodelay(mainwin, true);
+  // nodelay(mainwin, true);
   keypad(mainwin,true);
   // curs_set();
 }

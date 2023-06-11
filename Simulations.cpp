@@ -54,6 +54,6 @@ void Simulation::update(int mon) {
   mvwprintw(_simWin, 5, 1, "Date: ");
   // mvwprintw(_simWin, "SIM");
   wrefresh(_simWin);
-  refresh();
+  // refresh();
 
 }
