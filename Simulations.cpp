@@ -49,8 +49,8 @@ void Simulation::update(int mon,int pop) {
 
 
   //display
-  mvwprintw(_simWin, 1, 1, "Population: %d", _pop);
-  mvwprintw(_simWin, 3, 1, "Money: %d", _mon);
+  mvwprintw(_simWin, 1, 1, "Population: %d       ", _pop);
+  mvwprintw(_simWin, 3, 1, "Money: %d            ", _mon);
   mvwprintw(_simWin, 5, 1, "Date: ");
   // mvwprintw(_simWin, "SIM");
   wrefresh(_simWin);

@@ -13,5 +13,6 @@ class Building{
     int getrev();
     int getpop();
     int getCost();
+    std::string getType();
 
 };

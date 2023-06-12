@@ -77,8 +77,9 @@ void Game::updateSim(Simulation &simulate) {
     // int popAfter;
     
     for(int i = 0; i < _buildings.size(); i++) {
-      _price+=_buildings[i]->getrev();
-      _p+=_buildings[i]->getpop();
+      // _price+=_buildings[i]->getrev();
+      // _p+=_buildings[i]->getpop();
+      mvprintw(LINES/2+2+i,COLS/2,"%s",_buildings[i]->getType().c_str());
       // popAfter = _p;
       // if() {
       //   _p;

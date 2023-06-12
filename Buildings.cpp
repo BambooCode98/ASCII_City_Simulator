@@ -24,3 +24,7 @@ int Building::getpop() {
 int Building::getCost() {
   return _cost;
 }
+
+std::string Building::getType() {
+  return _building;
+}
