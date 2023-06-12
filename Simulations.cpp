@@ -20,7 +20,7 @@ auto now() {
 
 auto awake() {
   using std::chrono::operator""ms;
-  return now() + 1000ms;
+  return now() + 2000ms;
 }
 
 
@@ -36,12 +36,12 @@ void Simulation::updateMon(int mon) {
 
 }
 
-void Simulation::update(int mon) {
+void Simulation::update(int mon,int pop) {
 
   //update
   // updatePop();
   // updateMon();
-  std::thread popt(&Simulation::updatePop,this,5);
+  std::thread popt(&Simulation::updatePop,this,pop);
   std::thread mont(&Simulation::updateMon,this,mon);
   popt.join();
   mont.join();
@@ -56,4 +56,9 @@ void Simulation::update(int mon) {
   wrefresh(_simWin);
   // refresh();
 
+}
+
+
+void Simulation::getCost(int cost) {
+  _mon -= cost;
 }

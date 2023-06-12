@@ -8,9 +8,10 @@
 class Simulation{
   public:
     Simulation(WINDOW* sim);
-    void update(int mon);
+    void update(int mon,int pop);
     void updatePop(int pop);
     void updateMon(int mon);
+    void getCost(int cost);
 
 
   private:
