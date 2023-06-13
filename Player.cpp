@@ -65,7 +65,7 @@ void Player::checkforObjs() {
   init_pair(2,COLOR_BLUE, COLOR_BLACK);
   init_pair(3,COLOR_YELLOW, COLOR_BLACK);
 
-  int obj = winch(_win) & A_CHARTEXT;
+  int obj = mvwinch(_win,_y,_x) & A_CHARTEXT;
   mvprintw(LINES/1.3,COLS/1.3,"%d  want: %d", obj, 82);
   switch(obj) {
     case int('R'):
@@ -84,4 +84,8 @@ void Player::checkforObjs() {
       wattroff(_win,COLOR_PAIR(3));
       break;
   }
+  // if(obj == 'R') {
+  //   mvwaddch(_win,_y,_x,'R');
+  // }
+  wrefresh(_win);
 }

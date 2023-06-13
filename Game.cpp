@@ -24,6 +24,7 @@ void Game::runCity(Player &player,Simulation &simulate) {
     // refresh();
     _quit = player.moveCursor();
     // wrefresh(_cityWin);
+    player.checkforObjs();
     
     if(_quit == 'r') {
       _numR++;
@@ -39,7 +40,6 @@ void Game::runCity(Player &player,Simulation &simulate) {
       mvprintw(LINES/2,COLS/2,"Created an industrial building.");
     }
 
-    player.checkforObjs();
     _tBuilds = _numC+_numR+_numI;
 
     mvprintw(LINES/2+1,COLS/2,"Totals: %d", _tBuilds);
