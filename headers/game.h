@@ -27,6 +27,8 @@ class Game{
     bool _rc = false;
     bool _cc = false;
     bool _ic = false;
+    bool _okToBuild = true;
+    bool _envSafe = true;
 
 
 };

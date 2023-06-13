@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <string>
 #include <ncurses.h>
 
 
@@ -9,7 +9,9 @@ class Player{
   public:
     Player(WINDOW* win, int x, int y);
     int moveCursor();
-    void checkforObjs();
+    bool checkforObjs();
+    void checkForWalls(std::string dir);
+    bool checkEnv();
 
 
 
@@ -18,6 +20,8 @@ class Player{
     int _y;
     int _key;
     WINDOW* _win;
+    bool _envSafe = true;
+
 
 
 };

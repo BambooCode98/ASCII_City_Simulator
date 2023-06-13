@@ -9,10 +9,10 @@
 #include "player.h"
 #include "simulation.h"
 #include "buildings.h"
+#include "map.h"
 
 
 Game::Game() {
-  // _quit = quit;
 }
 
 void Game::setQuit(int quit) {
@@ -23,22 +23,27 @@ void Game::runCity(Player &player,Simulation &simulate) {
   while(_quit != 'p') {
     // refresh();
     _quit = player.moveCursor();
+    _envSafe = player.checkEnv();
+    mvprintw(LINES-1,COLS-5,"%b",_envSafe);
     // wrefresh(_cityWin);
-    player.checkforObjs();
+    // mvwprintw(_cityWin,LINES-25,50,"%d",COLS);
     
-    if(_quit == 'r') {
+    if(_quit == 'r' && _okToBuild && _envSafe) {
       _numR++;
       _rc = true;
-      mvprintw(LINES/2,COLS/2,"Created a residential building.");
-    } else if (_quit == 'c') {
+      mvprintw(LINES/2,COLS/2,"Created a residential building. ");
+    } else if (_quit == 'c' && _okToBuild && _envSafe) {
       _numC++;
       _cc = true;
-      mvprintw(LINES/2,COLS/2,"Created a commercial building.");
-    } else if (_quit == 'i') {
+      mvprintw(LINES/2,COLS/2,"Created a commercial building. ");
+    } else if (_quit == 'i' && _okToBuild) {
       _numI++;
       _ic = true;
       mvprintw(LINES/2,COLS/2,"Created an industrial building.");
     }
+
+    _okToBuild = player.checkforObjs();
+    mvprintw(LINES-1,COLS-1,"%b",_okToBuild);
 
     _tBuilds = _numC+_numR+_numI;
 
@@ -80,6 +85,7 @@ void Game::GameLoop() {
 
   //create city view
   WINDOW* city = newwin(LINES,COLS/2,0,0);
+
   _cityWin = city;
   box(city,0,0);
   Screen::createScreen(city);
@@ -91,7 +97,10 @@ void Game::GameLoop() {
   Screen::createScreen(stats);
   refresh();
 
-
+  Map newMap(LINES,COLS/2,_cityWin);
+  newMap.createMap();
+  wborder(city,'#','#','#','#','#','#','#','#');
+  wrefresh(_cityWin);
 
 
   //create player
