@@ -6,6 +6,8 @@
 
 Building::Building() {};
 
+// Building::~Building() {};
+
 Building::Building(std::string building,int revenue,int pop,int cost) {
   _building = building;
   _rev = revenue;

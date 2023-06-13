@@ -7,9 +7,10 @@ class Building{
   int _pop;
 
   public:
-    // Building(const Building&);
+    // Building(const Building&) = default;
     Building();
     Building(std::string building,int revenue,int pop,int cost);
+    ~Building() = default;
     int getrev();
     int getpop();
     int getCost();

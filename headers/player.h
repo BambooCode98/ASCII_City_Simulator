@@ -9,6 +9,7 @@ class Player{
   public:
     Player(WINDOW* win, int x, int y);
     int moveCursor();
+    void checkforObjs();
 
 
 

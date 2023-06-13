@@ -13,7 +13,7 @@ class Game{
     Game();
     void GameLoop();
     void setQuit(int quit);
-    void runCity(Player &player);
+    void runCity(Player &player,Simulation &simulate);
     void updateSim(Simulation &simulate);
 
 
@@ -21,10 +21,12 @@ class Game{
   private:
     int _quit;
     int _p = 0;
-    // float _price = 5000;
+    unsigned int _numR, _numC, _numI, _tBuilds;
     int _price = 5000;
-    std::vector<Building*> _buildings;
     WINDOW* _cityWin;
+    bool _rc = false;
+    bool _cc = false;
+    bool _ic = false;
 
 
 };

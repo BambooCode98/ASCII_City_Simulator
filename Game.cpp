@@ -19,44 +19,33 @@ void Game::setQuit(int quit) {
   _quit = quit;
 }
 
-void Game::runCity(Player &player) {
+void Game::runCity(Player &player,Simulation &simulate) {
   while(_quit != 'p') {
+    // refresh();
     _quit = player.moveCursor();
+    // wrefresh(_cityWin);
     
     if(_quit == 'r') {
-      Building res("res", 1, 25, 500);
-      // simulate.getCost(res.getCost());
-      if(_price <= 0) {
-        _price;
-      } else {
-        _price -= res.getCost();
-      }
+      _numR++;
+      _rc = true;
       mvprintw(LINES/2,COLS/2,"Created a residential building.");
-      _buildings.push_back(&res);
     } else if (_quit == 'c') {
-      Building com("com", 10, 0, 750);
-      // simulate.getCost(res.getCost());
-      if(_price <= 0) {
-        _price;
-      } else {
-        _price -= com.getCost();
-      }
+      _numC++;
+      _cc = true;
       mvprintw(LINES/2,COLS/2,"Created a commercial building.");
-      _buildings.push_back(&com);
     } else if (_quit == 'i') {
-      Building ind("ind", 25, 0, 1000);
-      // simulate.getCost(res.getCost());
-      if(_price <= 0) {
-        _price;
-      } else {
-        _price -= ind.getCost();
-      }
+      _numI++;
+      _ic = true;
       mvprintw(LINES/2,COLS/2,"Created an industrial building.");
-      _buildings.push_back(&ind);
     }
-    for(int i = 0; i < _buildings.size(); i++) {
-      // mvprintw(LINES/2+5+i,COLS/2,"%s revenue: %d","obj", _buildings[i]->getrev());
-    }
+
+    player.checkforObjs();
+    _tBuilds = _numC+_numR+_numI;
+
+    mvprintw(LINES/2+1,COLS/2,"Totals: %d", _tBuilds);
+    mvprintw(LINES/2+2,COLS/2,"R: %d ",_numR);
+    mvprintw(LINES/2+3,COLS/2,"C: %d ", _numC);
+    mvprintw(LINES/2+4,COLS/2,"I: %d ", _numI);
 
     refresh();
   }
@@ -65,32 +54,21 @@ void Game::runCity(Player &player) {
 }
 
 void Game::updateSim(Simulation &simulate) {
-  // _price = 5;
-  // int p = 0;
-  // for(int i = 0; i < _buildings.size(); i++) {
-  //     // _price+=_buildings[i]->getrev();
-  //     _p+=_buildings[i]->getpop();
-  //   }
+  
 
   while(_quit != 'p') {
-    // int popBefore = _p;
-    // int popAfter;
     
-    for(int i = 0; i < _buildings.size(); i++) {
-      // _price+=_buildings[i]->getrev();
-      // _p+=_buildings[i]->getpop();
-      mvprintw(LINES/2+2+i,COLS/2,"%s",_buildings[i]->getType().c_str());
-      // popAfter = _p;
-      // if() {
-      //   _p;
-      // } else {
-      //   _p+=_buildings[i]->getpop();
-
-      // }
+    if(_rc) {
+      simulate.subMon('r');
+      _rc = false;
+    } else if(_cc) {
+      simulate.subMon('c');
+      _cc = false;
+    } else if(_ic) {
+      simulate.subMon('i');
+      _ic = false;
     }
-    // m+=1;
-    simulate.update(_price,_p);
-    // m+=1;
+    simulate.update(_price,_p,_numR, _numC, _numI);
 
     refresh();
   }
@@ -118,10 +96,13 @@ void Game::GameLoop() {
 
   //create player
   Player player(city,1,1);
-  Simulation simulate(stats);
+  Building R("Res",1,25,500);
+  Building C("Com",25,0,750);
+  Building I("Ind",50,0,1000);
+  Simulation simulate(stats,R,C,I);
 
 
-  std::thread t1(&Game::runCity,this,std::ref(player));
+  std::thread t1(&Game::runCity,this,std::ref(player),std::ref(simulate));
   std::thread t2(&Game::updateSim,this,std::ref(simulate));
   t1.join();
   t2.join();
