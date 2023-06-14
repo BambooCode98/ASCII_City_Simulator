@@ -40,9 +40,11 @@ void Game::runCity(Player &player,Simulation &simulate) {
       _numI++;
       _ic = true;
       mvprintw(LINES/2,COLS/2,"Created an industrial building.");
+    } else if (_quit == '-' && _okToBuild) {
+      _numRoads++;
+      _roadc = true;
     } else if (_quit == 'x' && _envSafe) {
       _delete = player.canDelete();
-      // mvprintw(LINES-5,COLS/2+1,"%d", _delete);
       switch(_delete) {
         case('R'):
           _numR--;
@@ -54,6 +56,10 @@ void Game::runCity(Player &player,Simulation &simulate) {
           break;
         case('I'):
           _numI--;
+          player.clear();
+          break;
+        case('-'):
+          _numRoads--;
           player.clear();
           break;
         default:
@@ -68,10 +74,11 @@ void Game::runCity(Player &player,Simulation &simulate) {
 
     _tBuilds = _numC+_numR+_numI;
 
-    mvprintw(LINES/2+1,COLS/2,"Totals: %d", _tBuilds);
-    mvprintw(LINES/2+2,COLS/2,"R: %d ",_numR);
-    mvprintw(LINES/2+3,COLS/2,"C: %d ", _numC);
-    mvprintw(LINES/2+4,COLS/2,"I: %d ", _numI);
+    mvprintw(LINES/2+1,COLS/2+1,"Totals: %d", _tBuilds);
+    mvprintw(LINES/2+2,COLS/2+1,"R: %d ",_numR);
+    mvprintw(LINES/2+3,COLS/2+1,"C: %d ", _numC);
+    mvprintw(LINES/2+4,COLS/2+1,"I: %d ", _numI);
+    mvprintw(LINES/2+5,COLS/2+1,"Roads: %d ", _numRoads);
 
     refresh();
   }
@@ -84,6 +91,7 @@ void Game::updateSim(Simulation &simulate) {
 
   while(_quit != 'p') {
     
+    //subtract money from total in simulation
     if(_rc) {
       simulate.subMon('r');
       _rc = false;
@@ -93,7 +101,13 @@ void Game::updateSim(Simulation &simulate) {
     } else if(_ic) {
       simulate.subMon('i');
       _ic = false;
+    } else if(_roadc) {
+      simulate.subMon('-');
+      _roadc = false;
     }
+
+    //update simulation and update building totals
+    simulate.getNumExtraBuild(_numRoads);
     simulate.update(_price,_p,_numR, _numC, _numI);
 
     refresh();
@@ -126,10 +140,12 @@ void Game::GameLoop() {
 
   //create player
   Player player(city,1,1);
-  Building R("Res",1,25,500);
-  Building C("Com",25,0,750);
-  Building I("Ind",50,0,1000);
+  Building R("Res",1,25,500,0);
+  Building C("Com",25,0,750,0);
+  Building I("Ind",50,0,1000,0);
+  Building Road("Road",0,0,2,2);
   Simulation simulate(stats,R,C,I);
+  simulate.getOtherBuildings(Road);
 
 
   std::thread t1(&Game::runCity,this,std::ref(player),std::ref(simulate));

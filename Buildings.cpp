@@ -8,11 +8,12 @@ Building::Building() {};
 
 // Building::~Building() {};
 
-Building::Building(std::string building,int revenue,int pop,int cost) {
+Building::Building(std::string building,int revenue,int pop,int cost,int exp) {
   _building = building;
   _rev = revenue;
   _pop = pop;
   _cost = cost;
+  _exp = exp;
 }
 
 int Building::getrev() {
@@ -25,6 +26,10 @@ int Building::getpop() {
 
 int Building::getCost() {
   return _cost;
+}
+
+int Building::getExp() {
+  return _exp;
 }
 
 std::string Building::getType() {

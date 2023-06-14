@@ -46,11 +46,14 @@ void Simulation::updateMon(int mon) {
   if (_numi != 0) {
     _imonR = _ind->getrev();
   }
-  // _exp = _rmonC;
-  _inc =(_rmonR*_numr)+(_cmonR*_numc)+(_imonR*_numi)-_exp;
+  if(_numRoads != 0) {
+    _roadE = _road->getExp();
+  }
+  _exp = (_numRoads*_roadE);
+  _inc = (_rmonR*_numr)+(_cmonR*_numc)+(_imonR*_numi);
   // _mon =- _rmonC;
   // mvprintw(LINES/2, COLS/1.5, "Name: %s", name.c_str());
-  _mon += (_inc);
+  _mon += (_inc)-(_exp);
   std::this_thread::sleep_until(awake());
 
 }
@@ -94,5 +97,16 @@ void Simulation::subMon(char b) {
     _mon -= _com->getCost();
   } else if( b == 'i') {
     _mon -= _ind->getCost();
+  } else if( b == '-') {
+    _mon -= _road->getCost();
   }
+}
+
+
+void Simulation::getOtherBuildings(Building &road) {
+  _road = &road;
+}
+
+void Simulation::getNumExtraBuild(int numRoads) {
+  _numRoads = numRoads;
 }

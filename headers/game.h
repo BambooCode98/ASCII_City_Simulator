@@ -21,12 +21,15 @@ class Game{
   private:
     int _quit = 0;
     int _p = 0;
+    unsigned int _numRoads = 0;
     unsigned int _numR = 0, _numC = 0, _numI = 0, _tBuilds = 0;
     int _price = 5000;
     WINDOW* _cityWin;
+    //building costs - on/off
     bool _rc = false;
     bool _cc = false;
     bool _ic = false;
+    bool _roadc = false;
     bool _okToBuild = true;
     bool _envSafe = true;
     int  _delete = 0;
