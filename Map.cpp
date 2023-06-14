@@ -26,9 +26,10 @@ void Map::createMap() {
       mapData[i][j] = ' ';
       wattron(_win,COLOR_PAIR(10));
       wprintw(_win,"%c", mapData[i][j]);
+      mvprintw(LINES/2,COLS/2,"i:%d j:%d / sy:%d sx:%d",i,j,_sy,_sx);
       wattroff(_win,COLOR_PAIR(10));
       
-      if(j/2 == 51 || j/2+1 == 52) {
+      if(j%2 == 0) {
         wattron(_win,COLOR_PAIR(4));
         wprintw(_win,"~");
         wattroff(_win,COLOR_PAIR(4));
