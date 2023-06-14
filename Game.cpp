@@ -105,7 +105,7 @@ void Game::updateSim(Simulation &simulate) {
 void Game::GameLoop() {
 
   //create city view
-  WINDOW* city = newwin(LINES,COLS/2,0,0);
+  WINDOW* city = newwin(LINES,COLS/2+1,0,0);
 
   _cityWin = city;
   box(city,0,0);
