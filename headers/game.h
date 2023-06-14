@@ -29,6 +29,7 @@ class Game{
     bool _ic = false;
     bool _okToBuild = true;
     bool _envSafe = true;
+    int  _delete;
 
 
 };

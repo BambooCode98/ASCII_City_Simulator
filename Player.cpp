@@ -16,9 +16,11 @@ int Player::moveCursor() {
   wmove(_win,_y,_x);
 
 
-  init_pair(1,COLOR_RED, COLOR_BLACK);
-  init_pair(2,COLOR_BLUE, COLOR_BLACK);
-  init_pair(3,COLOR_YELLOW, COLOR_BLACK);
+  init_pair(1,COLOR_RED, COLOR_WHITE);
+  init_pair(2,COLOR_BLUE, COLOR_WHITE);
+  init_pair(3,COLOR_YELLOW, COLOR_WHITE);
+  init_color(11,400,400,400);
+  init_pair(5,COLOR_WHITE, 11);
  
   // mvwaddch(_win,_y+1,_x+1,'.');
 
@@ -42,23 +44,29 @@ int Player::moveCursor() {
     checkForWalls("left");
 
     // mvwaddch(_win,_y,_x,'.');
-  } else if(_key == 'r' && _envSafe) {
+  } else if(_key == 'r' && _envSafe && _canBuild) {
 
     wattron(_win,COLOR_PAIR(1));
     mvwaddch(_win,_y,_x,'R');
     wattroff(_win,COLOR_PAIR(1));
 
-  } else if(_key == 'c' && _envSafe) {
+  } else if(_key == 'c' && _envSafe && _canBuild) {
 
     wattron(_win,COLOR_PAIR(2));
     mvwaddch(_win,_y,_x,'C');
     wattroff(_win,COLOR_PAIR(2));
 
-  } else if(_key == 'i' && _envSafe) {
+  } else if(_key == 'i' && _envSafe && _canBuild) {
 
     wattron(_win,COLOR_PAIR(3));
     mvwaddch(_win,_y,_x,'I');
     wattroff(_win,COLOR_PAIR(3));
+
+  } else if(_key == '-' && _envSafe && _canBuild) {
+
+    wattron(_win,COLOR_PAIR(5));
+    mvwaddch(_win,_y,_x,'-');
+    wattroff(_win,COLOR_PAIR(5));
 
   }
   // mvwprintw(_win, LINES/2, COLS/2,"%c",char(_key));
@@ -72,25 +80,29 @@ bool Player::checkforObjs() {
 
   // wmove(_win,_x,_y);
   int obj = mvwinch(_win,_y,_x) & A_CHARTEXT;
-  bool canBuild = true;
-  mvprintw(LINES/1.3,COLS/1.3,"%d  want: %d", obj, 82);
+  // mvprintw(LINES/1.3,COLS/1.3,"%d  want: %d", obj, 82);
+  _canBuild = true;
+  // _canDelete = false;
   switch(obj) {
     case int('R'):
-      canBuild = false;
+      _canBuild = false;
+      // _canDelete = true;
       break;
     case int('C'):
-      canBuild = false;
+      _canBuild = false;
       break;
     case int('I'):
-      canBuild = false;
+      _canBuild = false;
       break;
     case int('~'):
-      canBuild = false;
-      // mvprintw(LINES/1.3,COLS/1.3,"You can't build on water!");
+      _canBuild = false;
       break;
+    case int('-'):
+      _canBuild = false;
+    break;
   }
   wrefresh(_win);
-  return canBuild;
+  return _canBuild;
 }
 
 void Player::checkForWalls(std::string dir) {
@@ -125,4 +137,33 @@ bool Player::checkEnv() {
   }
 
   return _envSafe;
+}
+
+int Player::canDelete() {
+  int toDelete = 0;
+
+  int del = mvwinch(_win,_y,_x) & A_CHARTEXT;
+  // _okToDel = d;
+
+  if(del==int('R')) {
+    toDelete = 'R';
+  } else if (del=='C') {
+    toDelete = 'C';
+  } else if (del=='I') {
+    toDelete = 'I';
+  } else if(del=='-') {
+    toDelete = del;
+  }
+
+  // mvprintw(LINES-7,COLS/2+1,"%d %d", toDelete, del);
+
+
+  return toDelete;
+
+}
+
+void Player::clear() {
+  wattron(_win,COLOR_PAIR(10));
+  mvwaddch(_win,_y,_x,' ');
+  wattroff(_win,COLOR_PAIR(10));
 }

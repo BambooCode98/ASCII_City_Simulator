@@ -12,6 +12,8 @@ class Player{
     bool checkforObjs();
     void checkForWalls(std::string dir);
     bool checkEnv();
+    int canDelete();
+    void clear();
 
 
 
@@ -21,6 +23,10 @@ class Player{
     int _key;
     WINDOW* _win;
     bool _envSafe = true;
+    bool _canBuild = true;
+    bool _okToDel = false;
+
+
 
 
 

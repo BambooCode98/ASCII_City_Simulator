@@ -24,7 +24,7 @@ void Game::runCity(Player &player,Simulation &simulate) {
     // refresh();
     _quit = player.moveCursor();
     _envSafe = player.checkEnv();
-    mvprintw(LINES-1,COLS-5,"%b",_envSafe);
+    mvprintw(LINES-1,COLS-25,"env: %b",_envSafe);
     // wrefresh(_cityWin);
     // mvwprintw(_cityWin,LINES-25,50,"%d",COLS);
     
@@ -36,14 +36,35 @@ void Game::runCity(Player &player,Simulation &simulate) {
       _numC++;
       _cc = true;
       mvprintw(LINES/2,COLS/2,"Created a commercial building. ");
-    } else if (_quit == 'i' && _okToBuild) {
+    } else if (_quit == 'i' && _okToBuild && _envSafe) {
       _numI++;
       _ic = true;
       mvprintw(LINES/2,COLS/2,"Created an industrial building.");
+    } else if (_quit == 'x' && _envSafe) {
+      _delete = player.canDelete();
+      // mvprintw(LINES-5,COLS/2+1,"%d", _delete);
+      switch(_delete) {
+        case('R'):
+          _numR--;
+          player.clear();
+          break;
+        case('C'):
+          _numC--;
+          player.clear();
+          break;
+        case('I'):
+          _numI--;
+          player.clear();
+          break;
+        default:
+          player.clear();
+          break;
+      }
+      _delete = 0;
     }
 
     _okToBuild = player.checkforObjs();
-    mvprintw(LINES-1,COLS-1,"%b",_okToBuild);
+    mvprintw(LINES-1,COLS-10,"build: %b",_okToBuild);
 
     _tBuilds = _numC+_numR+_numI;
 

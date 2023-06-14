@@ -24,10 +24,9 @@ void Map::createMap() {
   for(int i = 0; i < _sy; i++) {
     for(int j = 0; j < _sx; j++) {
       mapData[i][j] = ' ';
-      // wattron(_win,COLOR_PAIR(10));
+      wattron(_win,COLOR_PAIR(10));
       wprintw(_win,"%c", mapData[i][j]);
-      // wprintw(_win," ");
-      // wattroff(_win,COLOR_PAIR(10));
+      wattroff(_win,COLOR_PAIR(10));
       
       if(j/2 == 51 || j/2+1 == 52) {
         wattron(_win,COLOR_PAIR(4));
