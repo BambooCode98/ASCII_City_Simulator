@@ -29,7 +29,7 @@ void Map::createMap() {
       mvprintw(LINES/2,COLS/2,"i:%d j:%d / sy:%d sx:%d",i,j,_sy,_sx);
       wattroff(_win,COLOR_PAIR(10));
       
-      if(j%2 == 0) {
+      if(j == 5) {
         wattron(_win,COLOR_PAIR(4));
         wprintw(_win,"~");
         wattroff(_win,COLOR_PAIR(4));

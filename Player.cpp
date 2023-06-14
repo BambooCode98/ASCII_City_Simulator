@@ -20,7 +20,8 @@ int Player::moveCursor() {
   init_pair(2,COLOR_BLUE, COLOR_WHITE);
   init_pair(3,COLOR_YELLOW, COLOR_WHITE);
   init_color(11,400,400,400);
-  init_pair(5,COLOR_WHITE, 11);
+  init_color(12,100,100,100);
+  init_pair(5,COLOR_WHITE, 12);
  
   // mvwaddch(_win,_y+1,_x+1,'.');
 
@@ -62,7 +63,7 @@ int Player::moveCursor() {
     mvwaddch(_win,_y,_x,'I');
     wattroff(_win,COLOR_PAIR(3));
 
-  } else if(_key == '-' && _envSafe && _canBuild) {
+  } else if(_key == '-' && _canBuild) {
 
     wattron(_win,COLOR_PAIR(5));
     mvwaddch(_win,_y,_x,'-');

@@ -19,9 +19,9 @@ class Game{
 
 
   private:
-    int _quit;
+    int _quit = 0;
     int _p = 0;
-    unsigned int _numR, _numC, _numI, _tBuilds;
+    unsigned int _numR = 0, _numC = 0, _numI = 0, _tBuilds = 0;
     int _price = 5000;
     WINDOW* _cityWin;
     bool _rc = false;
@@ -29,7 +29,7 @@ class Game{
     bool _ic = false;
     bool _okToBuild = true;
     bool _envSafe = true;
-    int  _delete;
+    int  _delete = 0;
 
 
 };
