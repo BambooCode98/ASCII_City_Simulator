@@ -30,7 +30,8 @@ auto awake() {
 
 
 void Simulation::updatePop(int pop) {
-  _pop = pop;
+  _rPop = _res->getpop();
+  _pop = (_rPop*_numr);
   // std::this_thread::sleep_until(awake());
 
 }
@@ -61,7 +62,7 @@ void Simulation::update(int mon,int pop, int numr, int numc, int numi) {
   _numc = numc;
   _numi = numi;
 
-  //update
+  // update
   // updatePop();
   // updateMon();
   std::thread popt(&Simulation::updatePop,this,pop);
