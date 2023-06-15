@@ -21,7 +21,7 @@ int Player::moveCursor() {
   init_pair(3,COLOR_YELLOW, COLOR_WHITE);
   init_color(11,400,400,400);
   init_color(12,100,100,100);
-  init_pair(5,COLOR_WHITE, 12);
+  init_pair(5,COLOR_WHITE, 11);
  
   // mvwaddch(_win,_y+1,_x+1,'.');
 
